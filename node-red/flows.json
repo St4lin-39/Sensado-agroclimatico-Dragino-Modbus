@@ -1,6 +1,6 @@
 [
     {
-        "id": "7d33ad7101fe824e",
+        "id": "c1b8ce6c35ea9dda",
         "type": "tab",
         "label": "Flow 1",
         "disabled": false,
@@ -8,14 +8,148 @@
         "env": []
     },
     {
-        "id": "0c91853bc8195d17",
+        "id": "74974de829615750",
+        "type": "mqtt in",
+        "z": "c1b8ce6c35ea9dda",
+        "name": "TTN - Monitoreo agricola",
+        "topic": "v3/+/devices/+/up",
+        "qos": "0",
+        "datatype": "auto-detect",
+        "broker": "d3153624e1fc2721",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 170,
+        "y": 260,
+        "wires": [
+            [
+                "0642a3c3556a3913",
+                "9d609ac6c483f17b"
+            ]
+        ]
+    },
+    {
+        "id": "0642a3c3556a3913",
+        "type": "debug",
+        "z": "c1b8ce6c35ea9dda",
+        "name": "Uplink TTN - RAW",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 430,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "9d609ac6c483f17b",
+        "type": "function",
+        "z": "c1b8ce6c35ea9dda",
+        "name": "Normalizar uplink TTN",
+        "func": "// ============================================================\n// NORMALIZACIÓN DE UPLINKS TTN\n// Proyecto IoT agrícola\n//\n// Convierte el JSON completo recibido desde TTN en una\n// estructura interna limpia para el resto del sistema.\n//\n// Actualmente:\n//   rs485-lb-01 -> Sensor NPK #1\n//   rs485-lb-02 -> Sensor NPK #2\n//\n// Preparado para incorporar otros tipos de sensores después.\n// ============================================================\n\n\n// ------------------------------------------------------------\n// 1. Validar estructura básica del mensaje de TTN\n// ------------------------------------------------------------\n\nif (!msg.payload || !msg.payload.end_device_ids) {\n    node.warn(\"Uplink descartado: no contiene end_device_ids\");\n    return null;\n}\n\nif (!msg.payload.uplink_message) {\n    node.warn(\"Uplink descartado: no contiene uplink_message\");\n    return null;\n}\n\nif (!msg.payload.uplink_message.decoded_payload) {\n    node.warn(\"Uplink descartado: no contiene decoded_payload\");\n    return null;\n}\n\n\n// ------------------------------------------------------------\n// 2. Extraer información general del uplink\n// ------------------------------------------------------------\n\nconst deviceId = msg.payload.end_device_ids.device_id;\nconst receivedAt = msg.payload.received_at;\nconst decoded = msg.payload.uplink_message.decoded_payload;\n\n\n// ------------------------------------------------------------\n// 3. Catálogo de dispositivos conocidos\n//\n// Aquí podremos añadir posteriormente el sensor ambiental\n// sin modificar el resto de la arquitectura.\n// ------------------------------------------------------------\n\nconst devices = {\n\n    \"rs485-lb-01\": {\n        node: \"npk-01\",\n        sensorType: \"npk\",\n        description: \"Sensor NPK #1\"\n    },\n\n    \"rs485-lb-02\": {\n        node: \"npk-02\",\n        sensorType: \"npk\",\n        description: \"Sensor NPK #2\"\n    }\n\n};\n\n\n// ------------------------------------------------------------\n// 4. Verificar que conocemos el dispositivo\n// ------------------------------------------------------------\n\nif (!devices[deviceId]) {\n    node.warn(\"Uplink descartado: dispositivo no registrado -> \" + deviceId);\n    return null;\n}\n\nconst device = devices[deviceId];\n\n\n// ------------------------------------------------------------\n// 5. Procesar según el tipo de sensor\n// ------------------------------------------------------------\n\nlet measurements = {};\n\nif (device.sensorType === \"npk\") {\n\n    // Comprobar que existan las tres variables NPK.\n    // Se compara contra undefined porque 0 es una lectura válida.\n\n    if (\n        decoded.nitrogen === undefined ||\n        decoded.phosphorus === undefined ||\n        decoded.potassium === undefined\n    ) {\n        node.warn(\"Uplink NPK descartado: faltan variables en \" + deviceId);\n        return null;\n    }\n\n    measurements = {\n        nitrogen: Number(decoded.nitrogen),\n        phosphorus: Number(decoded.phosphorus),\n        potassium: Number(decoded.potassium)\n    };\n}\n\n\n// ------------------------------------------------------------\n// 6. Construir mensaje normalizado\n// ------------------------------------------------------------\n\nmsg.payload = {\n\n    device_id: deviceId,\n\n    node: device.node,\n\n    sensor_type: device.sensorType,\n\n    description: device.description,\n\n    timestamp: receivedAt,\n\n    measurements: measurements,\n\n    units: {\n        nitrogen: \"mg/kg\",\n        phosphorus: \"mg/kg\",\n        potassium: \"mg/kg\"\n    }\n\n};\n\n\n// ------------------------------------------------------------\n// 7. Entregar mensaje al siguiente nodo\n// ------------------------------------------------------------\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 440,
+        "y": 320,
+        "wires": [
+            [
+                "4069ca1f66b0860d",
+                "7d6dd170111e4139"
+            ]
+        ]
+    },
+    {
+        "id": "4069ca1f66b0860d",
+        "type": "debug",
+        "z": "c1b8ce6c35ea9dda",
+        "name": "Uplink normalizado",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 450,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "80e792642bd82fcb",
+        "type": "influxdb out",
+        "z": "c1b8ce6c35ea9dda",
+        "influxdb": "651a5690a2056a9d",
+        "name": "InfluxDB - Sensores agrícolas",
+        "measurement": "sensores",
+        "precision": "",
+        "retentionPolicy": "",
+        "database": "database",
+        "precisionV18FluxV20": "ms",
+        "retentionPolicyV18Flux": "",
+        "org": "agricultura",
+        "bucket": "sensores_agricolas",
+        "x": 910,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "7d6dd170111e4139",
+        "type": "function",
+        "z": "c1b8ce6c35ea9dda",
+        "name": "Preparar InfluxDB",
+        "func": "// ============================================================\n// PREPARAR DATOS PARA INFLUXDB\n// Proyecto IoT agrícola\n//\n// Entrada esperada:\n// {\n//   device_id: \"rs485-lb-01\",\n//   node: \"npk-01\",\n//   sensor_type: \"npk\",\n//   timestamp: \"...\",\n//   measurements: {\n//      nitrogen: ...,\n//      phosphorus: ...,\n//      potassium: ...\n//   }\n// }\n//\n// Salida para node-red-contrib-influxdb:\n// msg.payload = [\n//     fields,\n//     tags\n// ]\n// ============================================================\n\nconst data = msg.payload;\n\n// 1. Validar que exista la estructura normalizada\nif (!data || !data.measurements) {\n    node.warn(\"Dato descartado: no existe measurements\");\n    return null;\n}\n\n// 2. Convertir las mediciones a números\nconst nitrogen = Number(data.measurements.nitrogen);\nconst phosphorus = Number(data.measurements.phosphorus);\nconst potassium = Number(data.measurements.potassium);\n\n// 3. Validar que las mediciones sean numéricas\nif (\n    !Number.isFinite(nitrogen) ||\n    !Number.isFinite(phosphorus) ||\n    !Number.isFinite(potassium)\n) {\n    node.warn(\"Dato descartado: medición NPK no numérica\");\n    return null;\n}\n\n// 4. Fields de InfluxDB\nconst fields = {\n    nitrogen: nitrogen,\n    phosphorus: phosphorus,\n    potassium: potassium\n};\n\n// 5. Tags de InfluxDB\nconst tags = {\n    device_id: String(data.device_id),\n    node: String(data.node),\n    sensor_type: String(data.sensor_type)\n};\n\n// 6. Usar como timestamp el received_at original de TTN\nconst timestamp = new Date(data.timestamp);\n\nif (Number.isNaN(timestamp.getTime())) {\n    node.warn(\"Dato descartado: timestamp inválido\");\n    return null;\n}\n\n// El nodo InfluxDB está configurado con precisión en milisegundos\nmsg.timestamp = timestamp.getTime();\n\n// 7. Formato requerido por influxdb out\nmsg.payload = [\n    fields,\n    tags\n];\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 750,
+        "y": 400,
+        "wires": [
+            [
+                "80e792642bd82fcb",
+                "ee67650d59149021"
+            ]
+        ]
+    },
+    {
+        "id": "ee67650d59149021",
+        "type": "debug",
+        "z": "c1b8ce6c35ea9dda",
+        "name": "Datos preparados para InfluxDB",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 990,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "d3153624e1fc2721",
         "type": "mqtt-broker",
         "name": "",
-        "broker": "localhost",
-        "port": 1883,
+        "broker": "nam1.cloud.thethings.network",
+        "port": "8883",
+        "tls": "cddb517434a3b045",
         "clientid": "",
         "autoConnect": true,
-        "usetls": false,
+        "usetls": true,
         "protocolVersion": 4,
         "keepalive": 60,
         "cleansession": true,
@@ -39,131 +173,40 @@
         "sessionExpiry": ""
     },
     {
-        "id": "fe34d05f5853ebc9",
-        "type": "mqtt in",
-        "z": "7d33ad7101fe824e",
-        "name": "sensado",
-        "topic": "sensores/#",
-        "qos": "2",
-        "datatype": "json",
-        "broker": "0c91853bc8195d17",
-        "nl": false,
-        "rap": true,
-        "rh": 0,
-        "inputs": 0,
-        "x": 220,
-        "y": 300,
-        "wires": [
-            [
-                "750a37994192b99c"
-            ]
-        ]
+        "id": "651a5690a2056a9d",
+        "type": "influxdb",
+        "hostname": "127.0.0.1",
+        "port": 8086,
+        "protocol": "http",
+        "database": "database",
+        "name": "InfluxDB - Agricultura",
+        "usetls": false,
+        "tls": "",
+        "influxdbVersion": "2.0",
+        "url": "http://localhost:8086",
+        "timeout": 10,
+        "rejectUnauthorized": true
     },
     {
-        "id": "846ddcbf2ba219b4",
-        "type": "function",
-        "z": "7d33ad7101fe824e",
-        "name": "limpiar clima ",
-        "func": "\nconst INVALIDO = -999;\nconst limpio = {};\nconst descartados = [];\n\nfor (const [campo, valor] of Object.entries(msg.payload)) {\n    if (valor === INVALIDO) {\n        descartados.push(campo);\n    } else {\n        limpio[campo] = valor;\n    }\n}\n\nif (descartados.length > 0) {\n    node.warn(`Descartados en ${msg.payload.device_id}: ${descartados.join(\", \")}`);\n}\n\nmsg.payload = limpio;\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 610,
-        "y": 240,
-        "wires": [
-            [
-                "0ea2ead05af18113"
-            ]
-        ]
+        "id": "cddb517434a3b045",
+        "type": "tls-config",
+        "name": "TTN TLS",
+        "cert": "",
+        "key": "",
+        "ca": "",
+        "certname": "",
+        "keyname": "",
+        "caname": "",
+        "servername": "",
+        "verifyservercert": true,
+        "alpnprotocol": ""
     },
     {
-        "id": "0ea2ead05af18113",
-        "type": "debug",
-        "z": "7d33ad7101fe824e",
-        "name": "clima limpio",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 810,
-        "y": 240,
-        "wires": []
-    },
-    {
-        "id": "26e3ce591b0dc4de",
-        "type": "function",
-        "z": "7d33ad7101fe824e",
-        "name": "limpiar suelo ",
-        "func": "\nconst INVALIDO = -999;\nconst limpio = {};\nconst descartados = [];\n\nfor (const [campo, valor] of Object.entries(msg.payload)) {\n    if (valor === INVALIDO) {\n        descartados.push(campo);\n    } else {\n        limpio[campo] = valor;\n    }\n}\n\nif (descartados.length > 0) {\n    node.warn(`Descartados en ${msg.payload.device_id}: ${descartados.join(\", \")}`);\n}\n\nmsg.payload = limpio;\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 610,
-        "y": 340,
-        "wires": [
-            [
-                "ec971aa466af15ee"
-            ]
-        ]
-    },
-    {
-        "id": "ec971aa466af15ee",
-        "type": "debug",
-        "z": "7d33ad7101fe824e",
-        "name": "suelo limpio",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 810,
-        "y": 340,
-        "wires": []
-    },
-    {
-        "id": "750a37994192b99c",
-        "type": "switch",
-        "z": "7d33ad7101fe824e",
-        "name": "tipo",
-        "property": "payload.type",
-        "propertyType": "msg",
-        "rules": [
-            {
-                "t": "eq",
-                "v": "clima",
-                "vt": "str"
-            },
-            {
-                "t": "eq",
-                "v": "suelo",
-                "vt": "str"
-            }
-        ],
-        "checkall": "true",
-        "repair": false,
-        "outputs": 2,
-        "x": 410,
-        "y": 300,
-        "wires": [
-            [
-                "846ddcbf2ba219b4"
-            ],
-            [
-                "26e3ce591b0dc4de"
-            ]
-        ]
+        "id": "46f1a39743aa9822",
+        "type": "global-config",
+        "env": [],
+        "modules": {
+            "node-red-contrib-influxdb": "0.7.0"
+        }
     }
 ]
