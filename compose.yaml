@@ -34,10 +34,17 @@ services:
     environment:
       GF_SECURITY_ADMIN_USER: ${GRAFANA_ADMIN_USER}
       GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_ADMIN_PASSWORD}
+      GF_SERVER_ROOT_URL: ${GRAFANA_ROOT_URL:-http://localhost:3000/sensado_agroclimatico/}
+      GF_SERVER_SERVE_FROM_SUB_PATH: "true"    
+      INFLUXDB_ORG: ${INFLUXDB_ORG}  
+      INFLUXDB_BUCKET: ${INFLUXDB_BUCKET} 
+      INFLUXDB_ADMIN_TOKEN: ${INFLUXDB_ADMIN_TOKEN}  
 
     volumes:
       - grafana-data:/var/lib/grafana
       - ./infrastructure/grafana/provisioning:/etc/grafana/provisioning
+      - ./infrastructure/grafana/dashboards:/var/lib/grafana/dashboards
+
 
     networks:
       - iot-network
