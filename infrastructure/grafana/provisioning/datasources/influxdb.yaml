@@ -1,0 +1,17 @@
+apiVersion: 1
+
+datasources:
+  - name: InfluxDB-Flux
+    type: influxdb
+    uid: ag1xirw6vj9xcc
+    access: proxy
+    url: http://influxdb:8086
+    isDefault: true
+    editable: true
+    jsonData:
+      version: Flux
+      organization: ${INFLUXDB_ORG}
+      defaultBucket: ${INFLUXDB_BUCKET}
+    secureJsonData:
+      token: ${INFLUXDB_ADMIN_TOKEN}
+
