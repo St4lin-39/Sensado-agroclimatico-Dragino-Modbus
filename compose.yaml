@@ -22,6 +22,26 @@ services:
     networks:
       - iot-network
 
+  node-red:
+    build:
+      context: ./node-red
+      dockerfile: Dockerfile
+
+    container_name: iot-node-red
+    restart: unless-stopped
+
+    ports:
+      - "1880:1880"
+
+    volumes:
+      - node-red-data:/data
+
+    networks:
+      - iot-network
+
+    depends_on:
+      - influxdb
+
 
   grafana:
     image: grafana/grafana:latest
@@ -67,3 +87,6 @@ volumes:
 
   grafana-data:
     name: iot-agricola-grafana-data
+
+  node-red-data:
+    name: iot-agricola-node-red-data
