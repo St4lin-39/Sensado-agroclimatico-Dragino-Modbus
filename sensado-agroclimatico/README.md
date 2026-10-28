@@ -1,16 +1,40 @@
-# React + Vite
+﻿# Sensado agroclimático
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Vista operativa con React, Vite, JavaScript y CSS. Sin librerías de gráficas,
+estado global, backend ni conexión directa a InfluxDB.
 
-Currently, two official plugins are available:
+## Desarrollo
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Node compatible con Vite: `^20.19.0 || >=22.12.0`.
 
-## React Compiler
+```sh
+npm install
+npm run dev
+npm run build
+npm run lint
+npm run preview
+```
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Funcionalidad
 
-## Expanding the Oxlint configuration
+Tres NPK y un BYX simulados; últimas lecturas, vigencia, histórico SVG con
+filtros y tabla accesible; actualización, carga, error y reintento. Fechas de
+Colombia y estilos para móvil/tablet. Grafana enlaza a http://localhost:3000;
+requiere que el servicio local esté disponible y no configura sus dashboards.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+El escenario incluye un NPK con lectura de 47 minutos. Umbral inicial: 30 minutos,
+pendiente de confirmar contra la cadencia real. Los timestamps se fijan al
+cargar la sesión: actualizar no inventa uplinks; recargar reinicia el escenario.
+
+## Organización
+
+- components/: tabla NPK, ambiente, histórico y primitivas de lectura.
+- pages/: composición de pantalla.
+- hooks/: consulta y ciclo de actualización.
+- services/: adaptador asíncrono y cálculo de vigencia.
+- data/: catálogo y fixtures.
+- styles/: tokens y estilos adaptables.
+
+Ver [contrato propuesto](docs/data-contract.md). Cambiar el adaptador del servicio
+por la futura API preservando los DTO; los componentes no conocen InfluxDB,
+Flux ni credenciales. Infraestructura y adquisición permanecen sin cambios.

@@ -1,0 +1,245 @@
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
+.skip-link { position: fixed; top: -100px; left: 20px; z-index: 10; padding: 12px; background: white; }
+.skip-link:focus { top: 12px; }
+.app-header { background: var(--green-dark); color: white; }
+.header-inner, .app-nav > div, .dashboard { max-width: 1240px; margin: auto; padding-inline: 40px; }
+.header-inner { min-height: 94px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+.brand { display: flex; align-items: center; gap: 13px; text-decoration: none; font-size: 18px; font-weight: 600; letter-spacing: -.3px; }
+.brand small { display: block; color: #bdcebf; font-size: 12px; font-weight: 400; letter-spacing: .3px; margin-top: 3px; }
+.brand-mark { display: grid; place-items: center; border: 1px solid #829b7a; border-radius: 3px; width: 42px; height: 42px; font-size: 15px; color: #d6e4c3; letter-spacing: 1px; }
+.advanced-link { text-decoration: none; font-size: 13px; text-align: right; }
+.advanced-link:hover { text-decoration: underline; }
+.advanced-link small { display: block; color: #bdcebf; margin-top: 3px; font-size: 11px; }
+.app-nav { background: white; border-bottom: 1px solid var(--line); }
+.app-nav > div { display: flex; gap: 32px; }
+.app-nav a { padding: 15px 0; text-decoration: none; font-size: 13px; color: var(--muted); }
+.app-nav a:first-child { border-bottom: 2px solid var(--green); color: var(--green); font-weight: 600; }
+.app-nav a:hover { color: var(--green); }
+.dashboard { padding-block: 36px 22px; }
+.page-heading { display: flex; align-items: center; justify-content: space-between; gap: 24px; margin-bottom: 26px; }
+.eyebrow { color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: 1.4px; font-weight: 600; margin-bottom: 9px; }
+h1 { font-size: 32px; letter-spacing: -1px; font-weight: 600; margin-bottom: 10px; }
+h2 { font-size: 20px; letter-spacing: -.4px; font-weight: 600; }
+.muted { color: var(--muted); font-size: 14px; }
+.page-heading button { flex-shrink: 0; }
+.simulation-notice { display: flex; gap: 16px; align-items: baseline; padding: 11px 16px; background: #e9eee3; border-left: 3px solid #809b62; font-size: 12px; color: #495d43; }
+.simulation-notice strong { white-space: nowrap; }
+.error-notice { color: var(--red); padding: 16px; border: 1px solid currentColor; margin-top: 16px; background: white; }
+.system-summary { display: grid; grid-template-columns: 1.1fr .9fr 1fr; padding: 27px 0; margin-bottom: 8px; }
+.system-summary > div { padding-inline: 26px; border-right: 1px solid var(--line); }
+.system-summary > div:first-child { padding-left: 0; }
+.system-summary > div:last-child { border: 0; }
+.system-summary p { font-size: 12px; color: var(--muted); margin-bottom: 10px; }
+.system-summary strong { display: block; font-size: 24px; letter-spacing: -.5px; line-height: 1.3; font-weight: 500; }
+.system-summary strong small { color: var(--muted); font-size: 17px; }
+.system-summary span { display: block; font-size: 12px; color: var(--muted); margin-top: 7px; }
+.system-summary .summary-date { font-size: 20px; padding-top: 4px; }
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; margin-bottom: 24px; scroll-margin-top: 20px; overflow: hidden; }
+.section-heading { padding: 24px 26px 22px; display: flex; justify-content: space-between; align-items: center; gap: 20px; }
+.section-heading .eyebrow { margin-bottom: 7px; }
+.section-note { font-size: 12px; color: var(--muted); }
+.table-scroll { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; text-align: left; font-size: 13px; }
+th, td { padding: 20px 24px; border-top: 1px solid var(--line); white-space: nowrap; }
+thead { background: #f8f9f6; color: var(--muted); }
+thead th { font-size: 12px; font-weight: 500; padding-block: 12px; }
+thead th span { margin-left: 5px; font-size: 11px; }
+tbody th { font-weight: 400; }
+tbody tr:hover { background: #fafbf8; }
+.device-name { display: block; font-size: 15px; font-weight: 600; }
+.device-id { display: block; font-family: Consolas, monospace; font-size: 11px; color: var(--muted); margin-top: 4px; }
+.measurement { font-size: 23px; font-variant-numeric: tabular-nums; letter-spacing: -.5px; white-space: nowrap; }
+.measurement small { color: var(--muted); margin-left: 6px; letter-spacing: 0; font-size: 11px; }
+.date-cell { font-size: 12px; color: var(--muted); }
+.badge { display: inline-flex; gap: 7px; align-items: center; padding: 4px 9px; border-radius: 4px; font-size: 11px; white-space: nowrap; font-weight: 500; }
+.badge-fresh { background: var(--green-light); color: var(--green); }
+.badge-stale { background: var(--amber-light); color: var(--amber); }
+.status-dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+.panel-foot { padding: 12px 26px; border-top: 1px solid var(--line); color: var(--muted); font-size: 11px; background: #fcfcfa; }
+.climate-body { display: grid; grid-template-columns: 1fr 2fr; padding: 4px 26px 27px; align-items: center; }
+.climate-metrics { display: grid; grid-template-columns: 1fr 1fr; }
+.climate-metrics > div { border-left: 1px solid var(--line); padding-left: 32px; }
+.climate-metrics p { color: var(--muted); font-size: 13px; margin-bottom: 5px; }
+.climate-metrics .measurement { font-size: 36px; }
+.climate-metrics .measurement small { font-size: 17px; }
+.climate .panel-foot time { margin-left: 8px; }
+.history-filters { display: flex; gap: 16px; padding: 0 26px 22px; border-bottom: 1px solid var(--line); }
+.history-filters label { display: flex; flex-direction: column; gap: 6px; color: var(--muted); font-size: 12px; min-width: 170px; }
+.chart-area { padding: 22px 26px; min-height: 310px; }
+.chart-summary { display: flex; justify-content: space-between; gap: 16px; font-size: 13px; margin-bottom: 10px; }
+.chart-summary > span:last-child, .chart-summary small { color: var(--muted); font-size: 11px; }
+.chart-summary small { margin-left: 5px; }
+.history-chart { display: block; width: 100%; height: auto; min-height: 180px; }
+.history-chart text { fill: var(--muted); font-size: 12px; font-family: inherit; }
+.chart-dates { display: flex; justify-content: space-between; color: var(--muted); font-size: 11px; padding-left: 6%; padding-right: 4%; }
+.history-data { margin-top: 18px; font-size: 12px; color: var(--muted); }
+.history-data summary { cursor: pointer; width: fit-content; padding: 6px 0; }
+.history-data .table-scroll { max-height: 270px; margin-top: 10px; }
+.empty { padding: 55px 24px; text-align: center; color: var(--muted); }
+.empty button { margin-top: 16px; }
+.dashboard-footer { display: flex; justify-content: space-between; gap: 16px; color: var(--muted); font-size: 11px; padding: 2px 0 14px; }
+.footer-divider { margin-inline: 10px; color: #a0aa9e; }
+@media (max-width: 1000px) {
+  .header-inner, .app-nav > div, .dashboard { padding-inline: 24px; }
+  .system-summary strong { font-size: 20px; }
+  .system-summary .summary-date { font-size: 17px; }
+  th, td { padding-inline: 18px; }
+  thead th span { display: block; margin-left: 0; }
+}
+@media (max-width: 640px) {
+  .header-inner, .app-nav > div, .dashboard { padding-inline: 16px; }
+  .header-inner { min-height: 86px; gap: 14px; }
+  .brand { font-size: 14px; gap: 9px; }
+  .brand-mark { width: 32px; height: 36px; font-size: 12px; flex-shrink: 0; }
+  .brand small { font-size: 10px; }
+  .advanced-link { font-size: 11px; max-width: 112px; }
+  .advanced-link small { font-size: 9px; }
+  .app-nav > div { gap: 24px; overflow-x: auto; }
+  .app-nav a { font-size: 12px; white-space: nowrap; }
+  .dashboard { padding-top: 25px; }
+  .page-heading { flex-direction: column; align-items: flex-start; gap: 17px; }
+  h1 { font-size: 28px; }
+  .simulation-notice { flex-direction: column; gap: 4px; }
+  .system-summary { grid-template-columns: 1fr 1fr; gap: 22px 0; }
+  .system-summary > div { padding-inline: 16px; }
+  .system-summary > div:nth-child(2) { border: 0; padding-right: 0; }
+  .system-summary > div:last-child { grid-column: 1 / -1; padding: 16px 0 0; border-top: 1px solid var(--line); }
+  .system-summary strong { font-size: 19px; }
+  .section-heading { padding: 20px 16px; flex-wrap: wrap; gap: 10px; }
+  h2 { font-size: 18px; }
+  .section-note { font-size: 11px; }
+  .climate-body { grid-template-columns: 1fr; padding: 0 16px 22px; gap: 22px; }
+  .climate-metrics > div { padding-left: 18px; }
+  .climate-metrics > div:first-child { border: 0; padding-left: 0; }
+  .climate-metrics .measurement { font-size: 32px; }
+  .panel-foot { padding-inline: 16px; }
+  .history-filters { padding-inline: 16px; flex-wrap: wrap; gap: 12px; }
+  .history-filters label { flex: 1 1 130px; min-width: 0; }
+  .chart-area { padding-inline: 12px; }
+  .history-chart { min-height: 150px; }
+  .dashboard-footer { flex-direction: column; gap: 7px; }
+}
+
+/* Sensor-focused visual iteration */
+.header-inner, .app-nav > div, .dashboard { max-width: 1360px; }
+.header-inner { min-height: 84px; }
+.brand { font-size: 17px; letter-spacing: -.4px; }
+.brand small { font-size: 11px; letter-spacing: .7px; }
+.advanced-link { font-size: 12px; }
+.app-nav a:first-child { border-bottom: 0; font-weight: 400; color: var(--muted); }
+.dashboard { padding-top: 32px; }
+h1 { font-size: clamp(26px, 3vw, 34px); letter-spacing: -1.2px; }
+h2 { font-size: 21px; letter-spacing: -.6px; }
+.eyebrow { font-size: 10px; letter-spacing: 1.5px; }
+.muted { font-size: 13px; }
+.page-heading button { font-size: 12px; }
+.simulation-notice { font-size: 11px; padding: 10px 14px; }
+.system-summary { grid-template-columns: 1fr 1fr 1fr 1.55fr; padding-block: 22px; align-items: center; }
+.system-summary > div { padding-inline: 24px; }
+.system-summary strong { font-size: 29px; font-weight: 550; letter-spacing: -1px; font-variant-numeric: tabular-nums; }
+.system-summary span { display: flex; align-items: center; gap: 6px; font-size: 11px; margin-top: 5px; }
+.system-summary .summary-update strong { font-size: 15px; letter-spacing: -.3px; margin-top: 5px; }
+.summary-update small { font-size: 10px; color: var(--muted); }
+.summary-fresh strong, .summary-fresh .status-dot { color: var(--green); }
+.summary-stale strong, .summary-stale .status-dot { color: var(--amber); }
+.status-dot { display: inline-block; flex-shrink: 0; }
+.panel { border-radius: 5px; margin-bottom: 22px; }
+.section-heading { padding: 24px; }
+.section-note { font-size: 11px; }
+.device-name { font-size: 19px; letter-spacing: -.5px; }
+.device-id { font-family: ui-monospace, 'Cascadia Code', Consolas, monospace; font-size: 10px; margin-top: 5px; }
+.measurement { font-size: 29px; font-weight: 550; letter-spacing: -1px; }
+.measurement small { font-size: 10px; font-weight: 400; }
+.badge { font-size: 10px; padding: 4px 7px; border-radius: 3px; }
+.panel-foot { font-size: 10px; background: #f9faf5; padding-inline: 24px; }
+.metric-nitrogen { --metric-color: var(--nitrogen); }
+.metric-phosphorus { --metric-color: var(--phosphorus); }
+.metric-potassium { --metric-color: var(--potassium); }
+.metric-temperature { --metric-color: var(--temperature); }
+.metric-humidity { --metric-color: var(--humidity); }
+.npk-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid var(--line); }
+.npk-sensor { padding: 22px 24px 16px; min-width: 0; }
+.npk-sensor + .npk-sensor { border-left: 1px solid var(--line); }
+.sensor-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
+.nutrients { display: grid; gap: 18px; padding-block: 24px; }
+.nutrient-label { display: flex; align-items: center; gap: 8px; font-size: 11px; }
+.chemical-symbol { display: grid; place-items: center; width: 24px; height: 24px; border: 1px solid var(--line); color: var(--metric-color); border-radius: 3px; font-size: 12px; font-weight: 650; }
+.nutrient-label .measurement { margin-left: auto; }
+.nutrient-track { height: 5px; background: #ecefe7; margin-top: 7px; }
+.nutrient-track > span { display: block; height: 100%; background: var(--metric-color); }
+.sensor-footer { border-top: 1px solid var(--line); padding-top: 12px; display: flex; justify-content: space-between; gap: 8px; font-size: 10px; color: var(--muted); }
+.climate { background: #f9faf5; }
+.climate-body { grid-template-columns: 1fr 2fr; padding: 2px 24px 28px; gap: 24px; }
+.climate-device p { font-size: 11px; margin-block: 15px 8px; color: var(--muted); }
+.climate-label { display: flex; gap: 12px; align-items: center; color: var(--metric-color); }
+.climate-label svg { width: 28px; height: 28px; flex-shrink: 0; }
+.climate-label p { font-size: 12px; color: var(--ink); margin: 0; }
+.climate-metrics .measurement { display: block; font-size: 56px; letter-spacing: -2px; margin-block: 8px 0; }
+.climate-metrics .measurement small { font-size: 21px; vertical-align: 12px; margin-left: 8px; }
+.climate-caption { font-size: 10px; color: var(--muted); }
+.history { border-top: 3px solid var(--green); }
+.history-filters label { font-size: 11px; }
+.history-filters select { font-size: 12px; }
+.chart-area { padding: 24px; min-height: 410px; }
+.chart-legend { display: flex; gap: 8px; align-items: center; }
+.chart-legend i { width: 18px; height: 3px; background: var(--metric-color); }
+.chart-inspection { display: flex; align-items: baseline; gap: 16px; font-size: 11px; color: var(--muted); flex-wrap: wrap; margin-bottom: 8px; }
+.chart-inspection strong { color: var(--ink); font-size: 28px; letter-spacing: -.7px; font-weight: 550; font-variant-numeric: tabular-nums; }
+.chart-inspection small { font-size: 12px; font-weight: 400; letter-spacing: 0; color: var(--muted); }
+.chart-scroll { overflow-x: auto; }
+.history-chart { min-width: 580px; min-height: 0; }
+.history-chart .tooltip-text { fill: white; font-size: 11px; }
+.chart-control { display: flex; align-items: center; gap: 16px; font-size: 10px; color: var(--muted); margin-top: 10px; }
+.chart-control input { flex: 1; min-width: 80px; accent-color: var(--metric-color); height: 28px; cursor: pointer; }
+.chart-control > span { text-align: right; }
+.history-data { border-top: 1px solid var(--line); padding-top: 8px; }
+@media (max-width: 1100px) {
+  .npk-sensor { padding-inline: 16px; }
+  .sensor-heading { flex-direction: column; gap: 10px; }
+  .nutrient-label { gap: 6px; }
+  .measurement { font-size: 26px; }
+  .climate-metrics .measurement { font-size: 48px; }
+}
+@media (max-width: 760px) {
+  .system-summary { grid-template-columns: 1fr 1fr 1fr; gap: 18px 0; }
+  .system-summary > div { padding-inline: 15px; }
+  .system-summary > div:nth-child(2) { border-right: 1px solid var(--line); }
+  .system-summary > div:nth-child(3) { border: 0; }
+  .system-summary .summary-update { grid-column: 1 / -1; border-top: 1px solid var(--line); padding: 12px 0 0; display: flex; gap: 12px; flex-wrap: wrap; align-items: baseline; }
+  .npk-grid { grid-template-columns: 1fr; }
+  .npk-sensor { padding: 22px 24px; }
+  .npk-sensor + .npk-sensor { border-left: 0; border-top: 1px solid var(--line); }
+  .sensor-heading { flex-direction: row; align-items: center; }
+  .nutrients { gap: 14px; }
+  .nutrient-label { font-size: 12px; }
+  .measurement { font-size: 32px; }
+  .climate-body { grid-template-columns: 1fr; gap: 22px; }
+  .climate-device { display: flex; align-items: baseline; flex-wrap: wrap; gap: 8px 16px; }
+  .climate-device p { display: none; }
+  .climate-device .section-note { margin-left: auto; }
+  .climate-metrics > div:first-child { border-left: 0; padding-left: 0; }
+  .climate-metrics > div { padding-left: 24px; }
+}
+@media (max-width: 480px) {
+  .brand { font-size: 13px; }
+  .advanced-link { font-size: 10px; max-width: 100px; }
+  .system-summary strong { font-size: 26px; }
+  .system-summary span { font-size: 10px; }
+  .system-summary .summary-update { gap: 4px 12px; }
+  .section-heading { padding: 20px 18px; }
+  h2 { font-size: 19px; }
+  .npk-sensor { padding-inline: 18px; }
+  .climate-body { padding-inline: 18px; }
+  .climate-metrics .measurement { font-size: 42px; }
+  .climate-metrics .measurement small { font-size: 17px; vertical-align: 8px; }
+  .climate-label { gap: 8px; }
+  .climate-label p { font-size: 11px; }
+  .climate-label svg { width: 22px; height: 22px; }
+  .climate-metrics > div { padding-left: 18px; }
+  .chart-area { padding: 18px 14px; }
+  .chart-summary { flex-wrap: wrap; gap: 6px; }
+  .chart-control { flex-wrap: wrap; gap: 8px; }
+  .chart-control > span { width: 100%; }
+  .chart-inspection { gap: 4px 12px; }
+  .chart-inspection > span { flex-basis: 100%; }
+}

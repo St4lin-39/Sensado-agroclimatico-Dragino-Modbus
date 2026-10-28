@@ -1,0 +1,19 @@
+:root {
+  color-scheme: light;
+  --background: #f3f4ee;
+  --surface: #fffefa;
+  --ink: #243b32;
+  --muted: #617067;
+  --green: #3e684d;
+  --green-dark: #223f32;
+  --green-light: #eaf1e7;
+  --line: #dce2d7;
+  --amber: #87612d;
+  --amber-light: #f5eddd;
+  --red: #9b3535;
+  --nitrogen: #477856;
+  --phosphorus: #9b7443;
+  --potassium: #77729a;
+  --temperature: #ae714f;
+  --humidity: #467e8b;
+}
