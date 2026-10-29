@@ -6,7 +6,7 @@ function ClimateIcon({ humidity }) {
 
 export default function ClimatePanel({ device, now, threshold }) {
   return <section className="panel climate" id="ambiente" aria-labelledby="climate-title">
-    <div className="section-heading"><div><p className="eyebrow">02 / Ambiente · BYX</p><h2 id="climate-title">El pulso del ambiente</h2></div>{device && <FreshnessBadge timestamp={device.timestamp} now={now} threshold={threshold} />}</div>
+    <div className="section-heading"><div><p className="eyebrow">02 / Ambiente · BYX</p><h2 id="climate-title">Sensor agroclimático</h2></div>{device && <FreshnessBadge timestamp={device.timestamp} now={now} threshold={threshold} />}</div>
     {device ? <div className="climate-body"><div className="climate-device"><span className="device-name">{device.node}</span><span className="device-id">{device.device_id}</span><p>Condiciones agroclimáticas</p><span className="section-note">Última lectura<br /><Timestamp value={device.timestamp} /></span></div><div className="climate-metrics">{['temperature', 'humidity'].map((key) => <div className={`climate-reading metric-${key}`} key={key}><div className="climate-label"><ClimateIcon humidity={key === 'humidity'} /><p>{key === 'humidity' ? 'Humedad relativa' : 'Temperatura'}</p></div><Measurement measurement={device.measurements[key]} /><span className="climate-caption">{key === 'humidity' ? 'Humedad del aire' : 'Temperatura del aire'}</span></div>)}</div></div> : <p className="empty">No hay lecturas ambientales disponibles.</p>}
   </section>
 }

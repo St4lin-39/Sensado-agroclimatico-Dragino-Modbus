@@ -1,6 +1,6 @@
 ﻿@import './styles/tokens.css';
 * { box-sizing: border-box; }
-body { margin: 0; background: var(--background); color: var(--ink); font-family: 'Inter Variable', Inter, Aptos, 'SF Pro Text', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 15px; line-height: 1.5; -webkit-font-smoothing: antialiased; }
+body { margin: 0; background: var(--background); color: var(--ink); font-family: system-ui, Aptos, 'SF Pro Text', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 15px; line-height: 1.5; -webkit-font-smoothing: antialiased; }
 button, select { font: inherit; min-height: 42px; border-radius: 5px; border: 1px solid var(--line); background: white; color: var(--ink); padding: 8px 14px; }
 button { cursor: pointer; }
 button:hover:not(:disabled) { background: var(--green-light); border-color: var(--green); }

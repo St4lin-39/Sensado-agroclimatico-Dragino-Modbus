@@ -1,7 +1,6 @@
-import { createHistory, createOverview } from '../data/mockMonitoring.js'
+import { mockProvider } from './providers/mockProvider.js'
+import { apiProvider } from './providers/apiProvider.js'
 
-// Swap this adapter for fetch('/api/...'); preserve docs/data-contract.md DTOs.
-export const monitoringService = {
-  async getOverview() { return structuredClone(createOverview()) },
-  async getHistory(query) { return structuredClone(createHistory(query)) },
-}
+export const monitoringMode = import.meta.env.VITE_MONITORING_PROVIDER || 'mock'
+if (!['mock', 'api'].includes(monitoringMode)) throw new Error('Proveedor de monitoreo inválido.')
+export const monitoringService = monitoringMode === 'api' ? apiProvider : mockProvider

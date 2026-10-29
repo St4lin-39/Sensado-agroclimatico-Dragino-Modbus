@@ -1,7 +1,7 @@
 ﻿# Sensado agroclimático
 
 Vista operativa con React, Vite, JavaScript y CSS. Sin librerías de gráficas,
-estado global, backend ni conexión directa a InfluxDB.
+estado global ni conexión directa a InfluxDB. La API de lectura vive en `../api/`.
 
 ## Desarrollo
 
@@ -35,6 +35,9 @@ cargar la sesión: actualizar no inventa uplinks; recargar reinicia el escenario
 - data/: catálogo y fixtures.
 - styles/: tokens y estilos adaptables.
 
-Ver [contrato propuesto](docs/data-contract.md). Cambiar el adaptador del servicio
-por la futura API preservando los DTO; los componentes no conocen InfluxDB,
-Flux ni credenciales. Infraestructura y adquisición permanecen sin cambios.
+Ver [contrato](docs/data-contract.md) y [arranque de la API](../api/README.md).
+El proveedor predeterminado es mock. Para datos reales, arrancar la API y ejecutar
+en PowerShell `$env:VITE_MONITORING_PROVIDER = 'api'` antes de `npm.cmd run dev`.
+Para volver a mock, usar `'mock'` y reiniciar Vite. El proxy de desarrollo envía
+`/api` a `http://127.0.0.1:8000`; el frontend no recibe credenciales de InfluxDB.
+Los proveedores y sus pruebas están en `src/services/providers/`.
